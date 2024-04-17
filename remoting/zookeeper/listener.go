@@ -86,6 +86,9 @@ func (l *ZkEventListener) ListenServiceNodeEvent(zkPath string, listener remotin
 
 // nolint
 func (l *ZkEventListener) listenServiceNodeEvent(zkPath string, listener ...remoting.DataListener) bool {
+
+	logger.Infof("==========>>> listenServiceNodeEvent zkPath:%s", zkPath)
+
 	defer l.wg.Done()
 
 	l.pathMapLock.Lock()
@@ -153,6 +156,8 @@ func (l *ZkEventListener) handleZkNodeEvent(zkPath string, children []string, li
 		return false
 	}
 
+	logger.Infof("==========>>> handleZkNodeEvent zkPath:%s", zkPath)
+
 	newChildren, err := l.client.GetChildren(zkPath)
 	if err != nil {
 		if err == errNilChildren {
@@ -213,6 +218,8 @@ func (l *ZkEventListener) handleZkNodeEvent(zkPath string, children []string, li
 
 func (l *ZkEventListener) listenDirEvent(conf *common.URL, zkPath string, listener remoting.DataListener) {
 	defer l.wg.Done()
+
+	logger.Infof("==========>>> listenDirEvent zkPath:%s", zkPath)
 
 	var (
 		failTimes int
@@ -383,8 +390,9 @@ func timeSecondDuration(sec int) time.Duration {
 
 // ListenServiceEvent is invoked by ZkConsumerRegistry::Register/ZkConsumerRegistry::get/ZkConsumerRegistry::getListener
 // registry.go:Listen -> listenServiceEvent -> listenDirEvent -> listenServiceNodeEvent
-//                            |
-//                            --------> listenServiceNodeEvent
+//
+//	|
+//	--------> listenServiceNodeEvent
 func (l *ZkEventListener) ListenServiceEvent(conf *common.URL, zkPath string, listener remoting.DataListener) {
 	logger.Infof("listen dubbo path{%s}", zkPath)
 	l.wg.Add(1)
