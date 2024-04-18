@@ -87,7 +87,7 @@ func (l *ZkEventListener) ListenServiceNodeEvent(zkPath string, listener remotin
 // nolint
 func (l *ZkEventListener) listenServiceNodeEvent(zkPath string, listener ...remoting.DataListener) bool {
 
-	logger.Infof("==========>>> listenServiceNodeEvent zkPath:%s", zkPath)
+	logger.Infof("===1.5.9========>>> listenServiceNodeEvent zkPath:%s", zkPath)
 
 	defer l.wg.Done()
 
@@ -156,7 +156,7 @@ func (l *ZkEventListener) handleZkNodeEvent(zkPath string, children []string, li
 		return false
 	}
 
-	logger.Infof("==========>>> handleZkNodeEvent zkPath:%s", zkPath)
+	logger.Infof("===1.5.9========>>> handleZkNodeEvent zkPath:%s", zkPath)
 
 	newChildren, err := l.client.GetChildren(zkPath)
 	if err != nil {
@@ -219,7 +219,7 @@ func (l *ZkEventListener) handleZkNodeEvent(zkPath string, children []string, li
 func (l *ZkEventListener) listenDirEvent(conf *common.URL, zkPath string, listener remoting.DataListener) {
 	defer l.wg.Done()
 
-	logger.Infof("==========>>> listenDirEvent zkPath:%s", zkPath)
+	logger.Infof("===1.5.9========>>> listenDirEvent zkPath:%s", zkPath)
 
 	var (
 		failTimes int
